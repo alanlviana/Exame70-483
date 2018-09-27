@@ -1,0 +1,43 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace _1_004_ParandoUmaThread
+{
+    class Program
+    {
+        public static void ThreadMethod(object o)
+        {
+            for(int i = 0; i < (int)o; i++)
+            {
+                Console.WriteLine("ThreadProc: {0}", i);
+                Thread.Sleep(0);
+            }
+        }
+
+        static void Main(string[] args)
+        {
+
+            bool parado = false;
+            Thread t = new Thread(new ThreadStart(() =>
+            {
+                while (!parado)
+                {
+                    Console.WriteLine("Rodando...");
+                    Thread.Sleep(1000);
+                }
+            }));
+
+            t.Start();
+            Console.WriteLine("Aperte algum botão para sair.");
+            Console.ReadKey();
+
+            parado = true;
+            t.Join();
+
+        }
+    }
+}
